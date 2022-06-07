@@ -8,8 +8,8 @@
 
 ## Settings ##
 
-- ### Bozja/Eureka ###
-**RaiseShout** This settings will causing the bot to shout for a raise when you die. It includes a witty comment and <pos> so others can find your body. Defaults to off.
+### Bozja/Eureka ###
+- **RaiseShout** This settings will causing the bot to shout for a raise when you die. It includes a witty comment and <pos> so others can find your body. Defaults to off.
 - **ShoutTime** How long the bot should wait between shouting for raise.
 - **ThankYouSir** This setting has the bot say "Thank you" in chat, to thank the person that raised you. Defaults to Fase.
   
