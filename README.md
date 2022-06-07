@@ -1,10 +1,10 @@
-# [RebornProfiles][0]
+# [PandaPlugins][0]
 
 [![Download][1]][2]
 [![Discord][3]][4]
 [![Donate][5]][6]
 
-**RebornProfiles** is a collection of various OrderBot scripts for [RebornBuddy][7].
+**PandaPlugins** is a collection of various plugins for [RebornBuddy][7]. Check each plugin's ReadMe for a discription of what they do.
 
 ## Installation
 
@@ -20,17 +20,15 @@
 
 Want **automatic installation and updates**, including prerequisites?
 
-Install the [RepoBuddy][12] plugin -- `RebornProfiles `is configured by default!
+Install the [RepoBuddy][12] plugin
 
 #### Adding `RebornProfiles` to RepoBuddy
 
-ℹ️ New users can skip this step.
+In case your repoBuddy config is too old or otherwise missing `PandaPlugins`, you can add it via repoBuddy's settings menu:
 
-In case your repoBuddy config is too old or otherwise missing `RebornProfiles`, you can add it via repoBuddy's settings menu:
-
-- **Name:** RebornProfiles
-- **Type:** Profile
-- **URL:** `https://github.com/domesticwarlord86/RebornProfiles.git/trunk`
+- **Name:** PandaPlugins
+- **Type:** Plugin
+- **URL:** `https://github.com/domesticwarlord86/PandaPlugins.git/trunk`
 
 ![repBuddy Settings](https://i.imgur.com/KJhwxtw.png)
 
@@ -38,9 +36,9 @@ OR by closing the bot and editing `RebornBuddy\Plugins\repoBuddy\repoBuddyRepos.
 
 ```xml
 <Repo>
-  <Name>RebornProfiles</Name>
-  <Type>Profile</Type>
-  <URL>https://github.com/domesticwarlord86/RebornProfiles.git/trunk</URL>
+  <Name>PandaPlugins</Name>
+  <Type>Plugin</Type>
+  <URL>https://github.com/domesticwarlord86/PandaPlugins.git/trunk</URL>
 </Repo>
 ```
 
@@ -50,27 +48,17 @@ If you prefer manual setup instead of automatic,
 
 1. Download the [latest version][2].
 2. On the `.zip` file, right click > `Properties` > `Unblock` > `Apply`.
-3. Unzip all contents into `RebornBuddy\Profiles\` so it looks like this:
+3. Unzip all contents into `RebornBuddy\Plugins\` so it looks like this:
 
 ```
 RebornBuddy
-└── Profiles
-    └── RebornProfiles
-        ├── README.md
-        └── ...
+└── Plugins
+    └── Osiris
+    └── Vulcan
+    └── ...    
 ```
 
 4. Start RebornBuddy as normal.
-
-## Usage
-
-To load an OrderBot script:
-
-1. Start RebornBuddy and set the BotBase dropdown to `Order Bot`.
-2. Click `Load Profile` and navigate to `RebornBuddy\Profiles\RebornProfiles\`.
-3. Select the desired `.xml` script from the appropriate subfolder.
-4. Back in RebornBuddy, click `Start`.
-5. Watch for notifications in the client and logs -- some profiles require intervention!
 
 ## Troubleshooting
 
@@ -89,9 +77,9 @@ No need to ask if anyone's around or for permission to ask -- just go for it!
 
 [![Donate via Ko-Fi](https://i.imgur.com/bXUIjNA.png)][6] -->
 
-[0]: https://github.com/domesticwarlord86/RebornProfiles "RebornProfiles on GitHub"
+[0]: https://github.com/domesticwarlord86/PandaPlugins "PandaPlugins on GitHub"
 [1]: https://img.shields.io/badge/-Download-brightgreen
-[2]: https://github.com/domesticwarlord86/RebornProfiles/archive/refs/heads/main.zip "Download"
+[2]: https://github.com/domesticwarlord86/PandaPlugins/archive/refs/heads/main.zip "Download"
 [3]: https://img.shields.io/badge/Discord-7389D8?logo=discord&logoColor=ffffff&labelColor=6A7EC2
 [4]: https://discord.gg/CucSWEhJSZ "Discord"
 [5]: https://shields.io/badge/-Buy%20me%20a%20coffee-FF5E5B?logo=kofi&logoColor=ffffff&labelColor=FF5E5B
