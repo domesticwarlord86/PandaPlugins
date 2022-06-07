@@ -90,7 +90,7 @@ namespace OsirisPlugin
         
         private bool _raiseTheDead;
         [Description("Enable raising nearby dead people.")]
-        [Category("Raise")]
+        [Category("Misc")]
         [DefaultValue(false)]
         public bool Raise
         {
