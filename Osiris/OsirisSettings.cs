@@ -57,7 +57,7 @@ namespace OsirisPlugin
         private bool _thankRaiser;
         [Description("Thank the raiser in say after being raised by someone.")]
         [Category("Bozja/Eureka")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool ThankYouSir
         {
             get => _thankRaiser;
