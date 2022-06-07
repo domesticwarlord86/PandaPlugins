@@ -8,14 +8,14 @@
 
 ## Settings ##
 
-### Bozja/Eureka ###
+- ### Bozja/Eureka ###
 **RaiseShout** This settings will causing the bot to shout for a raise when you die. It includes a witty comment and <pos> so others can find your body. Defaults to off.
-**ShoutTime** How long the bot should wait between shouting for raise.
-**ThankYouSir** This setting has the bot say "Thank you" in chat, to thank the person that raised you. Defaults to Fase.
+- **ShoutTime** How long the bot should wait between shouting for raise.
+- **ThankYouSir** This setting has the bot say "Thank you" in chat, to thank the person that raised you. Defaults to Fase.
   
 ### Misc ###
-**ReleaseWait**  This setting controls whether or not to release your corpse or to wait for a raise. True will wait forever. False will release. Useful for when you're soloing fates or otherwise don't want to wait around for a raise. Defaults to True.
-**Raise** This setting controls whether or not you will Raise near by dead people. If you're on a class that has a raise ability, setting this to True will cause you to cast Raise on near by dead players. 
+- **ReleaseWait**  This setting controls whether or not to release your corpse or to wait for a raise. True will wait forever. False will release. Useful for when you're soloing fates or otherwise don't want to wait around for a raise. Defaults to True.
+- **Raise** This setting controls whether or not you will Raise near by dead people. If you're on a class that has a raise ability, setting this to True will cause you to cast Raise on near by dead players. 
 
 
 <!-- ## Looking to Donate? ❤️
