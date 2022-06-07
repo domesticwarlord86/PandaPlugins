@@ -22,7 +22,7 @@ Want **automatic installation and updates**, including prerequisites?
 
 Install the [RepoBuddy][12] plugin
 
-#### Adding `RebornProfiles` to RepoBuddy
+#### Adding `PandaPlugins` to RepoBuddy
 
 In case your repoBuddy config is too old or otherwise missing `PandaPlugins`, you can add it via repoBuddy's settings menu:
 
