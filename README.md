@@ -1,77 +1,12 @@
-# [PandaPlugins][0]
+# [Vulcan]
 
 [![Download][1]][2]
 [![Discord][3]][4]
 [![Donate][5]][6]
 
-**PandaPlugins** is a collection of various plugins for [RebornBuddy][7]. Check each plugin's ReadMe for a discription of what they do.
+**Vulcan**, as the Greek god from which it gets it's name, is a plugin that repairs your gear via Mendors. It's intended to be used on characters that don't have access to self repair or would other wise not want to use Lisbeth to do repair. Set the threashold for repairs in the settings and it'll find the nearest mednor in it's database when that threshold is reached.
 
-## Installation
 
-### Prerequisites
-
-- [RebornBuddy][7] with active license (paid)
-- [ExBuddy][8] (free)
-- [Lisbeth][9] with active license (paid)
-- [LlamaLibrary][10] (free)
-- Better combat routine, such as [Magitek][11] (free)
-
-### Automatic Setup (recommended)
-
-Want **automatic installation and updates**, including prerequisites?
-
-Install the [RepoBuddy][12] plugin
-
-#### Adding `PandaPlugins` to RepoBuddy
-
-In case your repoBuddy config is too old or otherwise missing `PandaPlugins`, you can add it via repoBuddy's settings menu:
-
-- **Name:** PandaPlugins
-- **Type:** Plugin
-- **URL:** `https://github.com/domesticwarlord86/PandaPlugins.git/trunk`
-
-![repBuddy Settings](https://i.imgur.com/KJhwxtw.png)
-
-OR by closing the bot and editing `RebornBuddy\Plugins\repoBuddy\repoBuddyRepos.xml`:
-
-```xml
-<Repo>
-  <Name>PandaPlugins</Name>
-  <Type>Plugin</Type>
-  <URL>https://github.com/domesticwarlord86/PandaPlugins.git/trunk</URL>
-</Repo>
-```
-
-### Manual Setup
-
-If you prefer manual setup instead of automatic,
-
-1. Download the [latest version][2].
-2. On the `.zip` file, right click > `Properties` > `Unblock` > `Apply`.
-3. Unzip all contents into `RebornBuddy\Plugins\` so it looks like this:
-
-```
-RebornBuddy
-└── Plugins
-    └── Osiris
-    └── Vulcan
-    └── ...    
-```
-
-4. Start RebornBuddy as normal.
-
-## Troubleshooting
-
-For live volunteer support, join the [Project BR Discord][4] channel `#domesticwarlord86-profile-help`.
-
-When asking for help, always include:
-
-- which script you loaded,
-- what you tried to do,
-- what went wrong,
-- relevant logs from the `RebornBuddy\Logs\` folder.
-
-No need to ask if anyone's around or for permission to ask -- just go for it!
 
 <!-- ## Looking to Donate? ❤️
 
