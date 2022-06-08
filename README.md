@@ -2,6 +2,7 @@
 
 [![Download][1]][2]
 [![Discord][3]][4]
+[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/domesticwarlord86)
 [![Donate][5]][6]
 
 **PandaPlugins** is a collection of various plugins for [RebornBuddy][7]. Check each plugin's ReadMe for a discription of what they do.
