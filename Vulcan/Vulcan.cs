@@ -13,6 +13,7 @@ using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.RemoteWindows;
 using LlamaLibrary.Helpers;
+using LlamaLibrary.Helpers.NPC;
 using LlamaLibrary.Logging;
 using TreeSharp;
 using Action = TreeSharp.Action;
@@ -36,6 +37,7 @@ namespace Vulcan
         public override string Name => _Name;
         public override bool WantButton => true;
         private VulcanSettingsFrm settings;
+        private static Location lastLocation;
 
         public override void OnPulse()
         {
@@ -69,10 +71,12 @@ namespace Vulcan
         private static async Task<bool> PluginTask()
         {
             if (Core.Me.InCombat || !Core.Me.IsAlive || FateManager.WithinFate || DutyManager.InInstance) return false;
-
+            
             var r = InventoryManager.EquippedItems.Any(item =>
                 item.Item != null && item.Item.RepairItemId != 0 &&
                 item.Condition < VulcanSettings.Instance.RepairThreshold);
+            
+            var location = new LlamaLibrary.Helpers.NPC.Location(WorldManager.ZoneId, Core.Me.Location);
 
             if (r)
             {
@@ -80,6 +84,8 @@ namespace Vulcan
                 TreeRoot.StatusText = $"Going to repair gear";
 
                 var mender = LlamaLibrary.Helpers.NPC.NpcHelper.GetClosestNpc(Menders.ListOfMenders);
+                
+                lastLocation = new LlamaLibrary.Helpers.NPC.Location(WorldManager.ZoneId, Core.Me.Location);
 
                 await LlamaLibrary.Helpers.Navigation.GetToNpc(mender);
 
@@ -91,7 +97,6 @@ namespace Vulcan
 
         public static async Task UseMender(uint MenderId)
         {
-
 
             var npcId = GameObjectManager.GetObjectByNPCId(MenderId);
 
@@ -137,6 +142,13 @@ namespace Vulcan
                     await Coroutine.Sleep(500);
                     Repair.Close();
                 }
+            }
+            
+            await GeneralFunctions.StopBusy();
+            if (WorldManager.ZoneId != lastLocation.ZoneId)
+            {
+                LogVulcan.Information($"Going back to where we were");
+                await LlamaLibrary.Helpers.Navigation.GetTo(lastLocation);
             }
         }
 

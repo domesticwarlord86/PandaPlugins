@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using Clio.Utilities;
 using LlamaLibrary.Helpers;
+using LlamaLibrary.Helpers.NPC;
 using LlamaLibrary.Logging;
 using LlamaLibrary.Retainers;
 using ActionType = ff14bot.Enums.ActionType;
@@ -37,7 +38,8 @@ namespace RetainerVentures
 
         public override string Name { get; } = NameValue;
         private static readonly string NameValue = "Retainer Ventures";
-
+        
+        private static Location lastLocation;
 
         public override Version Version
         {
@@ -155,6 +157,8 @@ namespace RetainerVentures
                 if (!Core.Me.InCombat || Core.Me.IsAlive || !FateManager.WithinFate || !DutyManager.InInstance ||
                     WorldHelper.CurrentWorldId == WorldHelper.HomeWorldId)
                 {
+                    lastLocation = new LlamaLibrary.Helpers.NPC.Location(WorldManager.ZoneId, Core.Me.Location);
+
                     Log.Information($"Not busy, running venture task.");
                     await HelperFunctions.CheckVentureTask();
                     RetainerVentureSettings.LastChecked = DateTime.Now;
@@ -164,6 +168,13 @@ namespace RetainerVentures
                     Log.Information($"Too busy, waiting 5.");
                     RetainerVentureSettings.LastChecked.AddMinutes(5);
                 }
+            }
+            
+            await GeneralFunctions.StopBusy();
+            if (WorldManager.ZoneId != lastLocation.ZoneId)
+            {
+                Log.Information($"Going back to where we were");
+                await LlamaLibrary.Helpers.Navigation.GetTo(lastLocation);
             }
 
             return false;
