@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheGardener", "TheGardener.csproj", "{57935461-845E-41FF-9277-72DD1B852689}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LlamaLibrary", "..\..\Quest Behaviors\__LlamaLibrary\LlamaLibrary.csproj", "{196EE308-0205-4CC4-B449-51064F7E9960}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LlamaLibrary", "..\..\..\Quest Behaviors\__LlamaLibrary\LlamaLibrary.csproj", "{196EE308-0205-4CC4-B449-51064F7E9960}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
