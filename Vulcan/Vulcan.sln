@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vulcan", "Vulcan.csproj", "{85CF776E-4C79-4196-85FB-E8611D1C6A46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LlamaLibrary", "..\..\Quest Behaviors\__LlamaLibrary\LlamaLibrary.csproj", "{196EE308-0205-4CC4-B449-51064F7E9960}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LlamaLibrary", "..\..\..\Quest Behaviors\__LlamaLibrary\LlamaLibrary.csproj", "{196EE308-0205-4CC4-B449-51064F7E9960}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
