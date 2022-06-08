@@ -37,9 +37,9 @@ namespace OsirisPlugin
         
         private static readonly Random _random = new Random();
 
-        private Composite deathCoroutine;
-        private Composite RaisePeople;
-        private Composite FakeDeath;
+        private Composite _deathCoroutine;
+        private Composite _RaisePeople;
+        private Composite _FakeDeath;
         private OsirisSettingsForm _form;
         public override string Author { get; } = "Kayla, DomesticWarlord86";
         
@@ -79,31 +79,55 @@ namespace OsirisPlugin
                 // ignored
             }   
         }
+        
+        
 
         public override void OnInitialize()
         {
-            deathCoroutine = new ActionRunCoroutine(ctx => HandleDeath());
-            RaisePeople = new ActionRunCoroutine(ctx => RaisePeopleTask());
-            FakeDeath = new ActionRunCoroutine(ctx => HandleFakeDeath());
+            _deathCoroutine = new ActionRunCoroutine(ctx => HandleDeath());
+            _RaisePeople = new ActionRunCoroutine(ctx => RaisePeopleTask());
+            _FakeDeath = new ActionRunCoroutine(ctx => HandleFakeDeath());
         }
 
         public override void OnEnabled()
         {
-            TreeRoot.OnStart += setHooks;
-        }
+            TreeRoot.OnStart += OnBotStart;
+            TreeRoot.OnStop += OnBotStop;
+            TreeHooks.Instance.OnHooksCleared += OnHooksCleared;
 
-        private void setHooks(BotBase bot)
-        {
-            Log("Setting Hooks");
-            TreeHooks.Instance.AddHook("DeathReviveLogic", deathCoroutine);
-            TreeHooks.Instance.AddHook("TreeStart", RaisePeople);
-            TreeHooks.Instance.AddHook("TreeStart", FakeDeath);
+            if (TreeRoot.IsRunning) { AddHooks(); }    
         }
-
+        
         public override void OnDisabled()
         {
-            TreeRoot.OnStart -= setHooks;
+            TreeRoot.OnStart -= OnBotStart;
+            TreeRoot.OnStop -= OnBotStop;
+            RemoveHooks();
         }
+        
+        public override void OnShutdown() { OnDisabled(); }
+        
+        private void AddHooks()
+        {
+            Logging.Write(Colors.Bisque, "Adding Osiris Hook");
+            TreeHooks.Instance.AddHook("DeathReviveLogic", _deathCoroutine);
+            TreeHooks.Instance.AddHook("TreeStart", _RaisePeople);
+            TreeHooks.Instance.AddHook("TreeStart", _FakeDeath);
+        }
+
+        private void RemoveHooks()
+        {
+            Logging.Write(Colors.Bisque, "Removing Osiris Hook");
+            TreeHooks.Instance.RemoveHook("DeathReviveLogic", _deathCoroutine);
+            TreeHooks.Instance.RemoveHook("TreeStart", _RaisePeople);
+            TreeHooks.Instance.RemoveHook("TreeStart", _FakeDeath);  
+        }
+
+        private void OnBotStop(BotBase bot) { RemoveHooks(); }
+
+        private void OnBotStart(BotBase bot) { AddHooks(); }
+
+        private void OnHooksCleared(object sender, EventArgs e) { RemoveHooks(); }
         
         private bool IsInBozjaOrEureka()
         {
@@ -127,17 +151,24 @@ namespace OsirisPlugin
         
         internal async Task<bool> HandleFakeDeath()
         {
-            if (Core.Me.CurrentHealth >= 1 || !(DutyManager.InInstance && !PartyManager.IsInParty) || !(DutyManager.InInstance && PartyManager.AllMembers.Any(i=> i.GetType() == typeof(TrustPartyMember)))) return false;
-            
-            if (Core.Me.CurrentHealth == 0)
+
+            // Only run after dying during solo duties or Trusts
+            if (DutyManager.InInstance && Core.Me.CurrentHealth <= 0 && (!PartyManager.IsInParty || PartyManager.AllMembers.Any(pm => pm is TrustPartyMember)))
             {
+                Poi.Clear("Player died.");
+                
                 Log($"Catching fake death. Waiting to be alive.");
-                await Coroutine.Wait(-1, () => (Core.Me.IsAlive));
+                await Coroutine.Wait(-1, () => Core.Me.IsAlive);
+
                 Log($"We are alive, loading profile...");
+                await Coroutine.Sleep(5000);
+
                 NeoProfileManager.Load(NeoProfileManager.CurrentProfile.Path);
                 NeoProfileManager.UpdateCurrentProfileBehavior();
+
                 await Coroutine.Sleep(5000);
             }
+
             return false;
         }
 
