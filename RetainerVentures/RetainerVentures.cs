@@ -168,13 +168,14 @@ namespace RetainerVentures
                     Log.Information($"Too busy, waiting 5.");
                     RetainerVentureSettings.LastChecked.AddMinutes(5);
                 }
-            }
-            
-            await GeneralFunctions.StopBusy();
-            if (WorldManager.ZoneId != lastLocation.ZoneId)
-            {
-                Log.Information($"Going back to where we were");
-                await LlamaLibrary.Helpers.Navigation.GetTo(lastLocation);
+                
+                await GeneralFunctions.StopBusy();
+                if (WorldManager.ZoneId != lastLocation.ZoneId)
+                {
+                    Log.Information($"Going back to where we were");
+                    await LlamaLibrary.Helpers.Navigation.GetTo(lastLocation);
+                }
+                
             }
 
             return false;
