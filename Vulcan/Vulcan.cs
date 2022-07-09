@@ -26,7 +26,7 @@ namespace Vulcan
 
         private static readonly string NameValue = "Vulcan";
 
-        private static readonly LLogger LogVulcan = new LLogger(NameValue, Colors.Firebrick);
+        private static readonly LLogger LogVulcan = new LLogger(NameValue, Colors.MediumPurple);
 
         private static ActionRunCoroutine hook;
         private MethodInfo _orderMethod;
