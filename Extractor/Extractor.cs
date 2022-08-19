@@ -88,7 +88,7 @@ namespace Extractor
         internal static async Task ExtractMateria()
         {
 																	
-            if (InventoryManager.FilledInventoryAndArmory.Any(x => x.SpiritBond == 100f))
+            if (InventoryManager.FilledInventoryAndArmory.Any(x => x.SpiritBond == 100f) && InventoryManager.FreeSlots > 0)
             {
 								await LlamaLibrary.Helpers.GeneralFunctions.StopBusy(leaveDuty: false);
                 Log.Information($"Extracting Materia from gear");
