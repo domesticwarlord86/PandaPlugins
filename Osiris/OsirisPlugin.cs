@@ -153,7 +153,7 @@ namespace OsirisPlugin
         {
 
             // Only run after dying during solo duties or Trusts
-            if (DutyManager.InInstance && Core.Me.CurrentHealth <= 0 && (!PartyManager.IsInParty || PartyManager.AllMembers.Any(pm => pm is TrustPartyMember)))
+            if (DutyManager.InInstance && Core.Me.IsAlive && Core.Me.CurrentHealth <= 0 && (!PartyManager.IsInParty || PartyManager.AllMembers.Any(pm => pm is TrustPartyMember)))
             {
                 Poi.Clear("Player died.");
                 
@@ -277,7 +277,6 @@ namespace OsirisPlugin
 
             }           
             
-
             Log($"We are alive, loading profile...");
             NeoProfileManager.Load(NeoProfileManager.CurrentProfile.Path);
             NeoProfileManager.UpdateCurrentProfileBehavior();
@@ -400,21 +399,25 @@ namespace OsirisPlugin
 
         private async Task Release()
         {
-            Log($"Releasing.");
-            await Coroutine.Wait(-1, () => (SelectYesno.IsOpen));
-            SelectYesno.ClickYes();
-            await Coroutine.Wait(-1, () => (CommonBehaviors.IsLoading));
-            while (CommonBehaviors.IsLoading)
+            if (Core.Me.IsAlive) return;
+            
+            if (SelectYesno.IsOpen)
             {
-                Log($"Waiting for zoning to finish...");
-                await Coroutine.Wait(-1, () => (!CommonBehaviors.IsLoading));
-            }            
-            while (!Core.Me.IsAlive)
-            {
-                Log($"Zoning finsihed, waiting to become alive...");
-                await Coroutine.Wait(-1, () => (Core.Me.IsAlive));
+                Log($"Releasing.");
+                await Coroutine.Wait(-1, () => (SelectYesno.IsOpen));
+                SelectYesno.ClickYes();
+                await Coroutine.Wait(-1, () => (CommonBehaviors.IsLoading));
+                while (CommonBehaviors.IsLoading)
+                {
+                    Log($"Waiting for zoning to finish...");
+                    await Coroutine.Wait(-1, () => (!CommonBehaviors.IsLoading));
+                }            
+                while (!Core.Me.IsAlive)
+                {
+                    Log($"Zoning finsihed, waiting to become alive...");
+                    await Coroutine.Wait(-1, () => (Core.Me.IsAlive));
+                }
             }
-
         }
 
         private async Task AcceptRaise()
