@@ -137,23 +137,23 @@ namespace OsirisPlugin
 
         private bool HasRezzerInParty()
         {
-            return PartyManager.AllMembers.Any(i => i.BattleCharacter.CurrentJob is ClassJobType.WhiteMage or 
+            return PartyManager.VisibleMembers.Any(i => i.BattleCharacter.CurrentJob is ClassJobType.WhiteMage or 
                                                         ClassJobType.Scholar or ClassJobType.Summoner or 
                                                         ClassJobType.RedMage or ClassJobType.Astrologian or 
                                                         ClassJobType.Sage or ClassJobType.Arcanist or ClassJobType.Conjurer
-                                                    && !i.IsMe && i.BattleCharacter.IsAlive);
+                                                    && !i.IsMe && i.BattleCharacter.IsAlive && i.BattleCharacter != null);
         }
         
         private bool AnyPartyMemberAlive()
         {
-            return PartyManager.AllMembers.Any(i => i.BattleCharacter.IsAlive);
+            return PartyManager.VisibleMembers.Any(i => i.BattleCharacter.IsAlive && i.BattleCharacter != null);
         }
         
         internal async Task<bool> HandleFakeDeath()
         {
 
             // Only run after dying during solo duties or Trusts
-            if (DutyManager.InInstance && Core.Me.IsAlive && Core.Me.CurrentHealth <= 0 && (!PartyManager.IsInParty || PartyManager.AllMembers.Any(pm => pm is TrustPartyMember)))
+            if (DutyManager.InInstance && Core.Me.IsAlive && Core.Me.CurrentHealth <= 0 && (!PartyManager.IsInParty || PartyManager.VisibleMembers.Any(pm => pm is TrustPartyMember)))
             {
                 Poi.Clear("Player died.");
                 
@@ -227,14 +227,14 @@ namespace OsirisPlugin
             }
                
             // Logic for NPC parties
-            if (PartyManager.AllMembers.Any(i=> i.GetType() == typeof(TrustPartyMember)))
+            if (PartyManager.VisibleMembers.Any(i=> i.GetType() == typeof(TrustPartyMember)))
             {
                 Log($"In a NPC party. Waiting for zone.");
                 await Coroutine.Wait(-1, () => (Core.Me.IsAlive));
             }                
 								
             //Logic for In Duty
-            if (DutyManager.InInstance && !IsInBozjaOrEureka() && !PartyManager.AllMembers.Any(i=> i.GetType() == typeof(TrustPartyMember)))
+            if (DutyManager.InInstance && !IsInBozjaOrEureka() && !PartyManager.VisibleMembers.Any(i=> i.GetType() == typeof(TrustPartyMember)))
             {
                 await HandleDeathInInstance();
             }
@@ -381,11 +381,11 @@ namespace OsirisPlugin
 
         private async Task HandleDeathInInstance()
         {
-            if (PartyManager.AllMembers.Any(i => i.BattleCharacter.InCombat) && AnyPartyMemberAlive())
+            if (PartyManager.VisibleMembers.Any(i => i.BattleCharacter.InCombat && i.BattleCharacter != null) && AnyPartyMemberAlive())
             {
                 Log("Party memebers in combat, waiting for Raise.");
                 await Coroutine.Wait(3000, () => ClientGameUiRevive.ReviveState == ReviveState.Dead);
-                await Coroutine.Wait(-1, () => Core.Me.HasAura(148) || !PartyManager.AllMembers.Any(i => i.BattleCharacter.InCombat) && AnyPartyMemberAlive());
+                await Coroutine.Wait(-1, () => Core.Me.HasAura(148) || !PartyManager.VisibleMembers.Any(i => i.BattleCharacter.InCombat && i.BattleCharacter != null) && AnyPartyMemberAlive());
                 await Coroutine.Sleep(500);
                 if (Core.Me.HasAura(148))
                 {
