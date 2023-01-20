@@ -13,9 +13,7 @@
 
 - [RebornBuddy][7] with active license (paid)
 - [ExBuddy][8] (free)
-- [Lisbeth][9] with active license (paid)
 - [LlamaLibrary][10] (free)
-- Better combat routine, such as [Magitek][11] (free)
 
 ### Automatic Setup (recommended)
 
@@ -54,9 +52,10 @@ If you prefer manual setup instead of automatic,
 ```
 RebornBuddy
 └── Plugins
-    └── Osiris
-    └── Vulcan
-    └── ...    
+    └── PandaPlugins
+      └── Osiris
+      └── Vulcan
+      └── ...    
 ```
 
 4. Start RebornBuddy as normal.
