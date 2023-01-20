@@ -47,7 +47,7 @@ If you prefer manual setup instead of automatic,
 
 1. Download the [latest version][2].
 2. On the `.zip` file, right click > `Properties` > `Unblock` > `Apply`.
-3. Unzip all contents into `RebornBuddy\Plugins\` so it looks like this:
+3. Unzip all contents into `RebornBuddy\Plugins\` so it looks like this (be sure to remove -main from the folder):
 
 ```
 RebornBuddy
