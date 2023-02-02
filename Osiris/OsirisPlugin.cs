@@ -14,6 +14,7 @@ using ff14bot.Navigation;
 using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 using ff14bot.RemoteWindows;
+using ff14bot.Settings;
 using TreeSharp;
 
 namespace OsirisPlugin
@@ -163,7 +164,7 @@ namespace OsirisPlugin
                 Log($"We are alive, loading profile...");
                 await Coroutine.Sleep(5000);
 
-                NeoProfileManager.Load(NeoProfileManager.CurrentProfile.Path);
+                NeoProfileManager.Load(CharacterSettings.Instance.LastNeoProfile);
                 NeoProfileManager.UpdateCurrentProfileBehavior();
 
                 await Coroutine.Sleep(5000);
@@ -278,7 +279,7 @@ namespace OsirisPlugin
             }           
             
             Log($"We are alive, loading profile...");
-            NeoProfileManager.Load(NeoProfileManager.CurrentProfile.Path);
+            NeoProfileManager.Load(CharacterSettings.Instance.LastNeoProfile);
             NeoProfileManager.UpdateCurrentProfileBehavior();
             await Coroutine.Sleep(5000);
             return true;
