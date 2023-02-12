@@ -82,6 +82,40 @@ namespace Vulcan
             {
                 LogVulcan.Information($"Going to repair gear.");
                 TreeRoot.StatusText = $"Going to repair gear";
+                
+                // Get out of the GC Barracks if in it
+                if (WorldManager.ZoneId == 534 || WorldManager.ZoneId == 535 || WorldManager.ZoneId == 536)
+                {
+                    uint[] npcIds = { 2007528,2006963,2007530 };
+                    var exitNpc = GameObjectManager.GameObjects.Where(p => p.IsTargetable && npcIds.Contains(p.NpcId)).OrderBy(p => p.Distance()).FirstOrDefault();
+                    if (exitNpc != null)
+                    {
+                        while (Core.Me.Location.Distance2D(exitNpc.Location) > 1.5f)
+                        {
+                            await Coroutine.Yield();
+                            Navigator.PlayerMover.MoveTowards(exitNpc.Location);
+                        }
+                        Navigator.PlayerMover.MoveStop();
+                        exitNpc.Interact();
+                        await Coroutine.Wait(10000, () => SelectYesno.IsOpen);
+                        if (!SelectYesno.IsOpen)
+                        {
+                            exitNpc.Interact();
+                            await Coroutine.Wait(10000, () => SelectYesno.IsOpen);
+                        }
+                        while (SelectYesno.IsOpen)
+                        {
+                            SelectYesno.Yes();
+                            await Coroutine.Wait(10000, () => CommonBehaviors.IsLoading);
+                            LogVulcan.Information($"Waiting for loading to finish...");
+                            await Coroutine.Wait(-1, () => !CommonBehaviors.IsLoading);
+                        }
+                    }
+                    else
+                    {
+                        LogVulcan.Error($"Couldn't find the exit");
+                    }
+                }
 
                 var mender = LlamaLibrary.Helpers.NPC.NpcHelper.GetClosestNpc(Menders.ListOfMenders);
                 
