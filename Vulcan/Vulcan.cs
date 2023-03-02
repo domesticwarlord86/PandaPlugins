@@ -72,6 +72,12 @@ namespace Vulcan
         {
             if (Core.Me.InCombat || !Core.Me.IsAlive || FateManager.WithinFate || DutyManager.InInstance) return false;
             
+            //FC buffs
+            if (VulcanSettings.Instance.FCBuffsEnabled)
+            {
+                await FCBuffs();
+            }
+            
             var r = InventoryManager.EquippedItems.Any(item =>
                 item.Item != null && item.Item.RepairItemId != 0 &&
                 item.Condition < VulcanSettings.Instance.RepairThreshold);
@@ -127,6 +133,69 @@ namespace Vulcan
             }
 
             return false;
+        }
+        
+        internal static async Task FCBuffs()
+        {
+            lastLocation = new LlamaLibrary.Helpers.NPC.Location(WorldManager.ZoneId, Core.Me.Location);
+            uint[] FCAuras = new uint[]
+                {353, 354, 355, 356, 357, 360, 361, 362, 363, 364, 365, 366, 367, 368, 413, 414, 902};
+            var buffs = Core.Me.Auras.Where(i => FCAuras.Contains(i.Id)).ToList();
+
+            // Run FCBuffs if need be
+            if (buffs.Count() < 2)
+            {
+                LogVulcan.Information($"Found {buffs.Count} Buffs Active");
+                LogVulcan.Information($"Calling Activate");
+                
+                if (WorldManager.ZoneId == 534 || WorldManager.ZoneId == 535 || WorldManager.ZoneId == 536)
+                {
+                    uint[] npcIds = { 2007528, 2006963, 2007530 };
+                    var exitNpc = GameObjectManager.GameObjects.Where(r => r.IsTargetable && npcIds.Contains(r.NpcId)).OrderBy(r => r.Distance()).FirstOrDefault();
+                    if (exitNpc != null)
+                    {
+                        while (Core.Me.Location.Distance2D(exitNpc.Location) > 1.5f)
+                        {
+                            await Coroutine.Yield();
+                            Navigator.PlayerMover.MoveTowards(exitNpc.Location);
+                        }
+
+                        Navigator.PlayerMover.MoveStop();
+                        exitNpc.Interact();
+                        await Coroutine.Wait(10000, () => SelectYesno.IsOpen);
+                        if (!SelectYesno.IsOpen)
+                        {
+                            exitNpc.Interact();
+                            await Coroutine.Wait(10000, () => SelectYesno.IsOpen);
+                        }
+
+                        while (SelectYesno.IsOpen)
+                        {
+                            SelectYesno.Yes();
+                            await Coroutine.Wait(10000, () => CommonBehaviors.IsLoading);
+                            LogVulcan.Information($"Waiting for loading to finish...");
+                            await Coroutine.Wait(-1, () => !CommonBehaviors.IsLoading);
+                        }
+                    }
+                    else
+                    {
+                        LogVulcan.Error($"Couldn't find the exit");
+                        return;
+                    }
+                }
+                
+                await LlamaLibrary.Helpers.FreeCompanyActions.ActivateBuffs(
+                    (int) VulcanSettings.Instance.Buff1,
+                    (int) VulcanSettings.Instance.Buff2, VulcanSettings.Instance.GrandCompany);
+                
+                
+                await GeneralFunctions.StopBusy();
+                if (WorldManager.ZoneId != lastLocation.ZoneId)
+                {
+                    LogVulcan.Information($"Going back to where we were");
+                    await LlamaLibrary.Helpers.Navigation.GetTo(lastLocation);
+                }
+            }
         }
 
         public static async Task UseMender(uint MenderId)
