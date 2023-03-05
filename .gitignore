@@ -661,19 +661,12 @@ fabric.properties
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/rider,csharp,visualstudio
-Vulcan/packages/
-Gluttony/.idea/.idea.Gluttony/.idea/encodings.xml
-Gluttony/.idea/.idea.Gluttony/.idea/indexLayout.xml
-Gluttony/.idea/.idea.Gluttony/.idea/projectSettingsUpdater.xml
-Gluttony/.idea/.idea.Gluttony/.idea/vcs.xml
-Gluttony/.idea/.idea.Gluttony/.idea/workspace.xml
-RetainerVentures/.idea/.idea.RetainerVentures/.idea/encodings.xml
-RetainerVentures/.idea/.idea.RetainerVentures/.idea/indexLayout.xml
-RetainerVentures/.idea/.idea.RetainerVentures/.idea/vcs.xml
-Vulcan/packages/RebornBuddy.Assemblies.1.0.436/lib/net461/GreyMagic.dll
-Vulcan/packages/RebornBuddy.Assemblies.1.0.436/lib/net461/RebornBuddy.exe
-Vulcan/packages/RebornBuddy.Assemblies.1.0.436/RebornBuddy.Assemblies.1.0.436.nupkg
-Vulcan/packages/RebornBuddy.Assemblies.1.0.436/lib/net461/GreyMagic.dll
-Vulcan/packages/RebornBuddy.Assemblies.1.0.436/lib/net461/RebornBuddy.exe
-Vulcan/packages/RebornBuddy.Assemblies.1.0.436/RebornBuddy.Assemblies.1.0.436.nupkg
-Vulcan/packages/RebornBuddy.Assemblies.1.0.436/lib/net461/GreyMagic.dll
+Vulcan/packages/*
+Vulcan/obj/*
+Vulcan/.idea/*
+Vulcan/bin/*
+Osirs/.idea/*
+Osirs/bin/*
+Osirs/obj/*
+Gluttony/.idea/*
+RetainerVentures/.idea/*
