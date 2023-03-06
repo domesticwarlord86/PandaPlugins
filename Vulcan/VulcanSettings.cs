@@ -37,7 +37,7 @@ namespace Vulcan
         private bool _fcBuffsEnabled;
         [Description("Whether or not to keep FCBuffs active.")]
         [Category("FCBuff Settings")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool FCBuffsEnabled
         {
             get => _fcBuffsEnabled;
