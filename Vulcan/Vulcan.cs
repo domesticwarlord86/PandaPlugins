@@ -73,7 +73,7 @@ namespace Vulcan
             if (Core.Me.InCombat || !Core.Me.IsAlive || FateManager.WithinFate || DutyManager.InInstance) return false;
             
             //FC buffs
-            if (VulcanSettings.Instance.FCBuffsEnabled)
+            if (VulcanSettings.Instance.FCBuffsEnabled && LlamaLibrary.Helpers.WorldHelper.IsOnHomeWorld)
             {
                 await FCBuffs();
             }
