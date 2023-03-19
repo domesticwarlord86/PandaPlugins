@@ -29,7 +29,7 @@ namespace Gluttony
         private GluttonySettings _settingsForm;
         private static uint _foodBuff = 48;
         private static uint _medBuff = 49;
-        private static uint _elementalHarmonyBuff = 49;
+        private static uint _elementalHarmonyBuff = 1587;
 
         public override string Author
         {
