@@ -29,11 +29,20 @@ namespace Gluttony
         private GluttonySettings _settingsForm;
         private static uint _foodBuff = 48;
         private static uint _medBuff = 49;
+        private static uint _elementalHarmonyBuff = 49;
 
-        public override string Author { get { return "DomesticWarlord"; } }
+        public override string Author
+        {
+            get { return "DomesticWarlord"; }
+        }
+
         public override string Name => "Gluttony";
-        public override Version Version { get { return new Version(1, 0, 0); } }
-        
+
+        public override Version Version
+        {
+            get { return new Version(1, 0, 0); }
+        }
+
         public override async void OnInitialize()
         {
             _coroutine = new ActionRunCoroutine(r => PluginTask());
@@ -45,7 +54,10 @@ namespace Gluttony
             TreeRoot.OnStop += OnBotStop;
             TreeHooks.Instance.OnHooksCleared += OnHooksCleared;
 
-            if (TreeRoot.IsRunning) { AddHooks(); }
+            if (TreeRoot.IsRunning)
+            {
+                AddHooks();
+            }
         }
 
         public override void OnDisabled()
@@ -55,13 +67,23 @@ namespace Gluttony
             RemoveHooks();
         }
 
-        public override void OnShutdown() { OnDisabled(); }
+        public override void OnShutdown()
+        {
+            OnDisabled();
+        }
 
-        public override bool WantButton { get { return true; } }
+        public override bool WantButton
+        {
+            get { return true; }
+        }
 
         public override void OnButtonPress()
         {
-            if (_settingsForm == null || _settingsForm.IsDisposed || _settingsForm.Disposing) { _settingsForm = new GluttonySettings(); }
+            if (_settingsForm == null || _settingsForm.IsDisposed || _settingsForm.Disposing)
+            {
+                _settingsForm = new GluttonySettings();
+            }
+
             _settingsForm.ShowDialog();
         }
 
@@ -77,11 +99,20 @@ namespace Gluttony
             TreeHooks.Instance.RemoveHook("TreeStart", _coroutine);
         }
 
-        private void OnBotStop(BotBase bot) { RemoveHooks(); }
+        private void OnBotStop(BotBase bot)
+        {
+            RemoveHooks();
+        }
 
-        private void OnBotStart(BotBase bot) { AddHooks(); }
+        private void OnBotStart(BotBase bot)
+        {
+            AddHooks();
+        }
 
-        private void OnHooksCleared(object sender, EventArgs e) { RemoveHooks(); }
+        private void OnHooksCleared(object sender, EventArgs e)
+        {
+            RemoveHooks();
+        }
 
         internal async Task<bool> PluginTask()
         {
@@ -94,21 +125,34 @@ namespace Gluttony
                 {
                     return false;
                 }
+
                 await EatFood();
             }
-            
+
             if (!Core.Player.HasAura(_medBuff) && Settings.Instance.SpiritPotionsEnabled)
             {
                 if (!InventoryManager.FilledSlots.Any(i =>
-                    i.RawItemId == 7059 || i.RawItemId == 19885 || i.RawItemId == 27960))
+                        i.RawItemId == 7059 || i.RawItemId == 19885 || i.RawItemId == 27960))
                 {
                     Logging.Write(Colors.Aquamarine, "Spiritbound potions are enabled, but none in inventory.");
                     return false;
                 }
+
                 await DrinkPotion();
             }
-            
-            
+
+            if (!Core.Player.HasAura(_elementalHarmonyBuff) && Settings.Instance.PotionOfHarmonyEnabled)
+            {
+                if (!InventoryManager.FilledSlots.Any(i => i.RawItemId == 23349))
+                {
+                    Logging.Write(Colors.Aquamarine, "Potion of Harmony is enabled, but none in inventory.");
+                    return false;
+                }
+
+                await UsePotionOfHarmony();
+            }
+
+
             //Don't block the logic below us in the tree.
             return false;
         }
@@ -131,17 +175,17 @@ namespace Gluttony
                 item.UseItem();
                 await Coroutine.Wait(5000, () => Core.Player.HasAura(_foodBuff));
             }
+
             return true;
         }
-        
+
         private static async Task<bool> DrinkPotion()
         {
             if (!Settings.Instance.SpiritPotionsEnabled) return true;
             if (!Core.Player.HasAura(_medBuff))
             {
-                    
-                uint[] potions = new uint[] {7059, 19885,27960};
-                    
+                uint[] potions = new uint[] { 7059, 19885, 27960 };
+
                 if (InventoryManager.FilledSlots.Any(i => potions.Contains(i.RawItemId)))
                 {
                     var item = InventoryManager.FilledSlots.First(i => potions.Contains(i.RawItemId));
@@ -151,33 +195,75 @@ namespace Gluttony
                         item.UseItem();
                     }
                 }
-                    
+            }
+
+
+            return true;
+        }
+
+        private static async Task<bool> UsePotionOfHarmony()
+        {
+            if (!Settings.Instance.PotionOfHarmonyEnabled) return true;
+            if (!Core.Player.HasAura(_elementalHarmonyBuff))
+            {
+                uint[] potions = new uint[] { 23349 };
+
+                if (InventoryManager.FilledSlots.Any(i => potions.Contains(i.RawItemId)))
+                {
+                    var item = InventoryManager.FilledSlots.First(i => potions.Contains(i.RawItemId));
+                    if (item.CanUse())
+                    {
+                        Logging.Write(Colors.Aquamarine, "Gluttony: Drinking " + item.Name);
+                        item.UseItem();
+                    }
+                }
+                else
+                {
+                    Logging.Write(Colors.Aquamarine, "Couldn't find Potion of Harmony");
+                }
             }
 
 
             return true;
         }
     }
-    
-    public static class Helpers 
+
+    public static class Helpers
     {
-        private static bool IsFoodItem(this BagSlot slot) =>  (slot.Item.EquipmentCatagory == ItemUiCategory.Meal || slot.Item.EquipmentCatagory == ItemUiCategory.Ingredient);
-        public static IEnumerable<BagSlot> GetFoodItems(this IEnumerable<BagSlot> bags) => bags.Where(s => s.IsFoodItem());
-        public static bool ContainsFooditem(this IEnumerable<BagSlot> bags, uint id) => bags.Select(s => s.TrueItemId).Contains(id);
-        public static BagSlot GetFoodItem(this IEnumerable<BagSlot> bags, uint id) => bags.First(s => s.TrueItemId == id);
-    }    
+        private static bool IsFoodItem(this BagSlot slot) => (slot.Item.EquipmentCatagory == ItemUiCategory.Meal ||
+                                                              slot.Item.EquipmentCatagory == ItemUiCategory.Ingredient);
+
+        public static IEnumerable<BagSlot> GetFoodItems(this IEnumerable<BagSlot> bags) =>
+            bags.Where(s => s.IsFoodItem());
+
+        public static bool ContainsFooditem(this IEnumerable<BagSlot> bags, uint id) =>
+            bags.Select(s => s.TrueItemId).Contains(id);
+
+        public static BagSlot GetFoodItem(this IEnumerable<BagSlot> bags, uint id) =>
+            bags.First(s => s.TrueItemId == id);
+    }
 
     public class Settings : JsonSettings
     {
         private static Settings _instance;
-        public static Settings Instance { get { return _instance ?? (_instance = new Settings()); ; } }
 
-        public Settings() : base(Path.Combine(CharacterSettingsDirectory, "Gluttony.json")) { }
+        public static Settings Instance
+        {
+            get
+            {
+                return _instance ?? (_instance = new Settings());
+                ;
+            }
+        }
 
-        [Setting]
-        public uint Id { get; set; }
-        
+        public Settings() : base(Path.Combine(CharacterSettingsDirectory, "Gluttony.json"))
+        {
+        }
+
+        [Setting] public uint Id { get; set; }
+
         private bool _spiritPotionEnabled;
+
         [DefaultValue(false)]
         public bool SpiritPotionsEnabled
         {
@@ -187,6 +273,22 @@ namespace Gluttony
                 if (_spiritPotionEnabled != value)
                 {
                     _spiritPotionEnabled = value;
+                    //Save();
+                }
+            }
+        }
+
+        private bool _harmonyPotionEnabled;
+
+        [DefaultValue(false)]
+        public bool PotionOfHarmonyEnabled
+        {
+            get => _harmonyPotionEnabled;
+            set
+            {
+                if (_harmonyPotionEnabled != value)
+                {
+                    _harmonyPotionEnabled = value;
                     //Save();
                 }
             }

@@ -21,6 +21,7 @@ namespace Gluttony
             if (InventoryManager.FilledSlots.ContainsFooditem(Settings.Instance.Id)) { foodDropBox.SelectedValue = Settings.Instance.Id; }
             
             spiritBindCheckBox1.Checked = Settings.Instance.SpiritPotionsEnabled;
+            harmonyCheckBox.Checked = Settings.Instance.PotionOfHarmonyEnabled;
             
             loading = false;
         }
@@ -51,6 +52,14 @@ namespace Gluttony
         {
             if (loading) return;
             Settings.Instance.SpiritPotionsEnabled = spiritBindCheckBox1.Checked;
+            Settings.Instance.Save();
+        }
+
+
+        private void harmonyCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (loading) return;
+            Settings.Instance.PotionOfHarmonyEnabled = harmonyCheckBox.Checked;
             Settings.Instance.Save();
         }
     }
