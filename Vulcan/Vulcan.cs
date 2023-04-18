@@ -289,7 +289,7 @@ namespace Vulcan
 
         private void OnHooksCleared(object sender, EventArgs e)
         {
-            AddHooks();
+            RemoveHooks();
         }
 
         public override void OnEnabled()
