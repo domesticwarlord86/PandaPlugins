@@ -386,7 +386,7 @@ namespace OsirisPlugin
             {
                 Log("Party memebers in combat, waiting for Raise.");
                 await Coroutine.Wait(3000, () => ClientGameUiRevive.ReviveState == ReviveState.Dead);
-                await Coroutine.Wait(-1, () => Core.Me.HasAura(148) || !PartyManager.VisibleMembers.Any(i => i.BattleCharacter.InCombat && i.BattleCharacter != null) && AnyPartyMemberAlive());
+                await Coroutine.Wait(-1, () => Core.Me.HasAura(148) || Core.Me.CurrentHealth > 1 || !PartyManager.VisibleMembers.Any(i => i.BattleCharacter.InCombat && i.BattleCharacter != null) && AnyPartyMemberAlive());
                 await Coroutine.Sleep(500);
                 if (Core.Me.HasAura(148))
                 {
@@ -441,7 +441,7 @@ namespace OsirisPlugin
         private async Task WaitForLife()
         {
             Log("Waiting for raise or auto Starting Point.");
-            await Coroutine.Wait(-1, () => Core.Me.HasAura(148) || Core.Me.CurrentHealth > 1);
+            await Coroutine.Wait(-1, () => Core.Me.HasAura(148) || Core.Me.CurrentHealth > 1 || Core.Me.IsAlive);
             if (Core.Me.HasAura(148))
             {
                 await AcceptRaise();
