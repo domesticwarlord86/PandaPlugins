@@ -88,7 +88,7 @@ namespace Extractor
         internal static async Task ExtractMateria()
         {
             List<uint> RelicSphereScrolls = new() { 7873, 7874, 7875, 7876, 7877, 7878, 7879, 7880, 7881, 7882, 9255 };
-            if (InventoryManager.FilledInventoryAndArmory.Any(x => x.SpiritBond == 100f && RelicSphereScrolls.Contains(x.RawItemId) == false) && InventoryManager.FreeSlots > 0)
+            if (InventoryManager.FilledInventoryAndArmory.Any(x => x.SpiritBond == 100f && RelicSphereScrolls.Contains(x.RawItemId) == false) && InventoryManager.FreeSlots > 0);
         }        
 
     }
