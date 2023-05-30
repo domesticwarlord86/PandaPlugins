@@ -87,10 +87,9 @@ namespace Extractor
 
         internal static async Task ExtractMateria()
         {
-																	
-            if (InventoryManager.FilledInventoryAndArmory.Any(x => x.SpiritBond == 100f) && InventoryManager.FreeSlots > 0)
+            if (InventoryManager.FilledInventoryAndArmory.Any(x => x.SpiritBond == 100f && x.RawItemId != 7873 || x.RawItemId != 7874 || x.RawItemId != 7875 || x.RawItemId != 7876 || x.RawItemId != 7877 || x.RawItemId != 7878 || x.RawItemId != 7879 || x.RawItemId != 7880 || x.RawItemId != 7881 || x.RawItemId != 7882 || x.RawItemId != 9255 ) && InventoryManager.FreeSlots > 0)
             {
-								await LlamaLibrary.Helpers.GeneralFunctions.StopBusy(leaveDuty: false);
+                await LlamaLibrary.Helpers.GeneralFunctions.StopBusy(leaveDuty: false);
                 Log.Information($"Extracting Materia from gear");
                 await LlamaLibrary.Utilities.Inventory.ExtractFromAllGear();
             }
