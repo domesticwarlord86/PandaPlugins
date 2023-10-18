@@ -186,7 +186,7 @@ namespace Gluttony
             {
                 uint[] potions = new uint[] { 7059, 19885, 27960 };
 
-                if (InventoryManager.FilledSlots.Any(i => potions.Contains(i.RawItemId)))
+                if (InventoryManager.FilledSlots.Any(i => potions.Contains(i.TrueItemId)))
                 {
                     var item = InventoryManager.FilledSlots.First(i => potions.Contains(i.RawItemId));
                     if (item.CanUse())
