@@ -1,0 +1,10 @@
+{
+  "Name": "PandaPlugins",
+  "Url": "https://github.com/domesticwarlord86/PandaPlugins.git",
+  "Branch": "master",
+  "CloneIfNotExist": true,
+  "IsPrivate": false,
+  "RepoType": "Plugin",
+  "UpdateFrequency": "EveryDay",
+  "Description": ""
+}
