@@ -14,11 +14,11 @@ namespace TheGardener
     {
         private static GardenerSettings _GardenerSettingssettings;
         public static GardenerSettings Instance => _GardenerSettingssettings ?? (_GardenerSettingssettings = new GardenerSettings());
-        
+
         public GardenerSettings() : base(Path.Combine(CharacterSettingsDirectory, "GardenerSettings.json")) {
 
-        }   
-        
+        }
+
         private DateTime _resetTime = new DateTime(1970, 1, 1);
         private DateTime _lastChecked = new DateTime(1970, 1, 1);
         private bool _shouldPlant = false;
@@ -40,12 +40,14 @@ namespace TheGardener
             Lavender_Beds_Free_Company = 57,
             The_Goblet_Free_Company = 58,
             Shirogane_Free_Company = 96,
+            Empyreum_Free_Company = 164,
             Mist_Private = 59,
             Lavender_Beds_Private = 60,
             The_Goblet_Private = 61,
             Shirogane_Private = 97,
+            Empyreum__Private = 165,
         }
-        
+
         public enum HouseAetheryte2
         {
             Not_Selected = -1,
@@ -53,12 +55,14 @@ namespace TheGardener
             Lavender_Beds_Free_Company = 57,
             The_Goblet_Free_Company = 58,
             Shirogane_Free_Company = 96,
+            Empyreum_Free_Company = 164,
             Mist_Private = 59,
             Lavender_Beds_Private = 60,
             The_Goblet_Private = 61,
             Shirogane_Private = 97,
-        } 
-        
+            Empyreum__Private = 165,
+        }
+
         public enum HouseAetheryte3
         {
             Not_Selected = -1,
@@ -66,10 +70,12 @@ namespace TheGardener
             Lavender_Beds_Free_Company = 57,
             The_Goblet_Free_Company = 58,
             Shirogane_Free_Company = 96,
+            Empyreum_Free_Company = 164,
             Mist_Private = 59,
             Lavender_Beds_Private = 60,
             The_Goblet_Private = 61,
             Shirogane_Private = 97,
+            Empyreum__Private = 165,
         }
 
 
@@ -98,8 +104,8 @@ namespace TheGardener
                 }
             }
         }
-        
-        
+
+
         [DefaultValue(HouseAetheryte2.Not_Selected)]
         public HouseAetheryte2 Aetheryte2
         {
@@ -124,9 +130,9 @@ namespace TheGardener
                     Save();
                 }
             }
-        }        
-        
-        
+        }
+
+
         [DefaultValue(HouseAetheryte3.Not_Selected)]
         public HouseAetheryte3 Aetheryte3
         {
@@ -151,10 +157,10 @@ namespace TheGardener
                     Save();
                 }
             }
-        }         
-        
-        
-        
+        }
+
+
+
         [Browsable(true)]
         public DateTime ResetTime
         {
