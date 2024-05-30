@@ -29,10 +29,12 @@ namespace TheGardener
         private Vector3 _gardenLocation;
         private Vector3 _gardenLocation2;
         private Vector3 _gardenLocation3;
+        private Vector3 _gardenLocation4;
 
         private HouseAetheryte _houseaetheryte;
         private HouseAetheryte2 _houseaetheryte2;
         private HouseAetheryte3 _houseaetheryte3;
+        private HouseAetheryte4 _houseaetheryte4;
         public enum HouseAetheryte
         {
             Not_Selected = -1,
@@ -64,6 +66,21 @@ namespace TheGardener
         }
 
         public enum HouseAetheryte3
+        {
+            Not_Selected = -1,
+            Mist_Free_Company = 56,
+            Lavender_Beds_Free_Company = 57,
+            The_Goblet_Free_Company = 58,
+            Shirogane_Free_Company = 96,
+            Empyreum_Free_Company = 164,
+            Mist_Private = 59,
+            Lavender_Beds_Private = 60,
+            The_Goblet_Private = 61,
+            Shirogane_Private = 97,
+            Empyreum__Private = 165,
+        }
+
+        public enum HouseAetheryte4
         {
             Not_Selected = -1,
             Mist_Free_Company = 56,
@@ -154,6 +171,32 @@ namespace TheGardener
                 if (_gardenLocation3 != value)
                 {
                     _gardenLocation3 = value;
+                    Save();
+                }
+            }
+        }
+
+        [DefaultValue(HouseAetheryte4.Not_Selected)]
+        public HouseAetheryte4 Aetheryte4
+        {
+            get => _houseaetheryte4;
+            set
+            {
+                if (_houseaetheryte4 != value)
+                {
+                    _houseaetheryte4 = value;
+                    Save();
+                }
+            }
+        }
+        public Vector3 GardenLocation4
+        {
+            get => _gardenLocation4;
+            set
+            {
+                if (_gardenLocation4 != value)
+                {
+                    _gardenLocation4 = value;
                     Save();
                 }
             }

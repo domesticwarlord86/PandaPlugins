@@ -37,6 +37,7 @@ namespace TheGardener
             this.ChocoboSettings = new System.Windows.Forms.TabPage();
             this.StableLoc = new System.Windows.Forms.Button();
             this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
+            this.setlocation4Button = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.ChocoboSettings.SuspendLayout();
@@ -55,6 +56,7 @@ namespace TheGardener
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.setlocation4Button);
             this.tabPage1.Controls.Add(this.BtnSetLocation3);
             this.tabPage1.Controls.Add(this.BtnSetLocation2);
             this.tabPage1.Controls.Add(this.BtnSetLocation);
@@ -69,9 +71,9 @@ namespace TheGardener
             // 
             // BtnSetLocation3
             // 
-            this.BtnSetLocation3.Location = new System.Drawing.Point(429, 308);
+            this.BtnSetLocation3.Location = new System.Drawing.Point(273, 308);
             this.BtnSetLocation3.Name = "BtnSetLocation3";
-            this.BtnSetLocation3.Size = new System.Drawing.Size(186, 28);
+            this.BtnSetLocation3.Size = new System.Drawing.Size(131, 28);
             this.BtnSetLocation3.TabIndex = 4;
             this.BtnSetLocation3.Text = "Set Garden3 Location";
             this.BtnSetLocation3.UseVisualStyleBackColor = true;
@@ -79,9 +81,9 @@ namespace TheGardener
             // 
             // BtnSetLocation2
             // 
-            this.BtnSetLocation2.Location = new System.Drawing.Point(220, 308);
+            this.BtnSetLocation2.Location = new System.Drawing.Point(140, 308);
             this.BtnSetLocation2.Name = "BtnSetLocation2";
-            this.BtnSetLocation2.Size = new System.Drawing.Size(186, 28);
+            this.BtnSetLocation2.Size = new System.Drawing.Size(127, 28);
             this.BtnSetLocation2.TabIndex = 3;
             this.BtnSetLocation2.Text = "Set Garden2 Location";
             this.BtnSetLocation2.UseVisualStyleBackColor = true;
@@ -91,7 +93,7 @@ namespace TheGardener
             // 
             this.BtnSetLocation.Location = new System.Drawing.Point(8, 308);
             this.BtnSetLocation.Name = "BtnSetLocation";
-            this.BtnSetLocation.Size = new System.Drawing.Size(186, 28);
+            this.BtnSetLocation.Size = new System.Drawing.Size(126, 28);
             this.BtnSetLocation.TabIndex = 2;
             this.BtnSetLocation.Text = "Set Garden1 Location";
             this.BtnSetLocation.UseVisualStyleBackColor = true;
@@ -135,13 +137,23 @@ namespace TheGardener
             this.propertyGrid2.Size = new System.Drawing.Size(635, 355);
             this.propertyGrid2.TabIndex = 0;
             // 
+            // setlocation4Button
+            // 
+            this.setlocation4Button.Location = new System.Drawing.Point(410, 308);
+            this.setlocation4Button.Name = "setlocation4Button";
+            this.setlocation4Button.Size = new System.Drawing.Size(131, 28);
+            this.setlocation4Button.TabIndex = 5;
+            this.setlocation4Button.Text = "Set Garden4 Location";
+            this.setlocation4Button.UseVisualStyleBackColor = true;
+            this.setlocation4Button.Click += new System.EventHandler(this.setlocation4Button_Click);
+            // 
             // GardenerSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(643, 381);
             this.Controls.Add(this.tabControl1);
-            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GardenerSettingsForm";
             this.Text = "GardenerSettings";
             this.Load += new System.EventHandler(this.GardenerSettings_Load);
@@ -158,7 +170,7 @@ namespace TheGardener
 
         private System.Windows.Forms.Button BtnSetLocation3;
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button setlocation4Button;
 
         private System.Windows.Forms.Button BtnSetLocation2;
 

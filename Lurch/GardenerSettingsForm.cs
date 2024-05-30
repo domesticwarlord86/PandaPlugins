@@ -128,13 +128,13 @@ namespace TheGardener
             {16026, "Potting Soil"},
         };
 
-        public GardenerSettingsForm() 
+        public GardenerSettingsForm()
         {
             InitializeComponent();
             propertyGrid1.SelectedObject = TheGardener.GardenSettings;
             propertyGrid1.Update();
             propertyGrid2.SelectedObject = TheGardener.ChocoboSettings;
-            propertyGrid2.Update();            
+            propertyGrid2.Update();
             initialize_form();
         }
 
@@ -162,7 +162,7 @@ namespace TheGardener
                 if (ctl.Length == 0) continue;
                 foreach (var control in ctl)
                 {
-                    var cb = (ComboBox) control;                    
+                    var cb = (ComboBox) control;
                     SetDoubleBuffer(cb, true);
                     cb.DataSource = b;
                     cb.DisplayMember = "Value";
@@ -193,7 +193,7 @@ namespace TheGardener
 
             if (_seeds.ContainsKey(GardenerSettings.Instance.Seed7)) comboSeed7.SelectedValue = GardenerSettings.Instance.Seed7;
             if (_soils.ContainsKey(GardenerSettings.Instance.Soil7)) comboSoil7.SelectedValue = GardenerSettings.Instance.Soil7;
-            */       
+            */
         }
 
         private void SetDoubleBuffer(Control ctl, bool doublebuffered)
@@ -216,7 +216,7 @@ namespace TheGardener
             propertyGrid1.SelectedObject = TheGardener.GardenSettings;
             propertyGrid1.Update();
         }
-        
+
         private void BtnSetLocation3_Click_1(object sender, EventArgs e)
         {
             GardenerSettings.Instance.GardenLocation3 = Core.Me.Location;
@@ -230,7 +230,12 @@ namespace TheGardener
             propertyGrid1.SelectedObject = TheGardener.GardenSettings;
             propertyGrid1.Update();
         }
-        
+
+        private void setlocation4Button_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /*
 
         private void comboSeed0_SelectedIndexChanged(object sender, EventArgs e)
@@ -327,5 +332,7 @@ namespace TheGardener
             propertyGrid2.SelectedObject = TheGardener.ChocoboSettings;
             propertyGrid2.Update();
         }
+
+
     }
 }
