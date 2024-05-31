@@ -233,7 +233,9 @@ namespace TheGardener
 
         private void setlocation4Button_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            GardenerSettings.Instance.GardenLocation4 = Core.Me.Location;
+            propertyGrid1.SelectedObject = TheGardener.GardenSettings;
+            propertyGrid1.Update();
         }
 
         /*
