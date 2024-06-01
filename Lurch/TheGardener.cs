@@ -174,8 +174,8 @@ namespace TheGardener
                     //     GeneratePlantPlan();
                     // }
                     //await _activate((uint)Settings.Aetheryte, Settings.GardenLocation, plantPlan); // need to change this to accept a dict...
-                    LogGarden.Information($"Go to Garden at Location 4: " +GardenSettings.Aetheryte3);
-                    await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)GardenSettings.Aetheryte3, GardenSettings.GardenLocation3, plantPlan); // need to change this to accept a dict...
+                    LogGarden.Information($"Go to Garden at Location 4: " +GardenSettings.Aetheryte4);
+                    await LlamaLibrary.Helpers.GardenHelper.GoGarden((uint)GardenSettings.Aetheryte4, GardenSettings.GardenLocation4, plantPlan); // need to change this to accept a dict...
                     GardenSettings.LastChecked = DateTime.Now;
                     GardenSettings.ResetTime = DateTime.Now + new TimeSpan(0, 1, 1, 0);
                 }
