@@ -38,7 +38,7 @@ namespace RetainerVentures
 
         public override string Name { get; } = NameValue;
         private static readonly string NameValue = "Retainer Ventures";
-        
+
         private static Location lastLocation;
 
         public override Version Version
@@ -48,6 +48,8 @@ namespace RetainerVentures
 
         private static readonly LLogger Log = new LLogger(NameValue, Colors.Aquamarine);
         private DateTime _lastChecked = new DateTime(1970, 1, 1);
+
+        private static readonly uint[] _ventureUnlockQuests = { 66968, 66969, 66970 };
 
         public override async void OnInitialize()
         {
@@ -134,9 +136,18 @@ namespace RetainerVentures
 
         private static async Task<bool> PluginTask()
         {
-            
+
             if (Core.Me.InCombat || !Core.Me.IsAlive || FateManager.WithinFate || DutyManager.InInstance ||
-                WorldHelper.CurrentWorldId != WorldHelper.HomeWorldId) return false;
+                WorldHelper.CurrentWorldId != WorldHelper.HomeWorldId)
+            {
+                return false;
+            }
+
+            if (!_ventureUnlockQuests.Any(questId => QuestLogManager.IsQuestCompleted(questId)) ||
+                HelperFunctions.FuncNumberOfRetainers() == 0)
+            {
+                return false;
+            }
 
             var verified = await HelperFunctions.VerifiedRetainerData();
             if (!verified)
@@ -146,7 +157,7 @@ namespace RetainerVentures
 
             var rets = await HelperFunctions.GetOrderedRetainerArray(true);
 
-            var now = (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            var now = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
 
             if (rets.Any(i =>
                     i.Active && i.VentureTask != 0 && (i.VentureEndTimestamp - now) <= 0 &&
@@ -168,14 +179,14 @@ namespace RetainerVentures
                     Log.Information($"Too busy, waiting 5.");
                     RetainerVentureSettings.LastChecked.AddMinutes(5);
                 }
-                
+
                 await GeneralFunctions.StopBusy();
                 if (WorldManager.ZoneId != lastLocation.ZoneId)
                 {
                     Log.Information($"Going back to where we were");
                     await LlamaLibrary.Helpers.Navigation.GetTo(lastLocation);
                 }
-                
+
             }
 
             return false;
