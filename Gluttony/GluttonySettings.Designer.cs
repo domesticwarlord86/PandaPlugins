@@ -33,6 +33,7 @@
             this.foodLabel = new System.Windows.Forms.Label();
             this.spiritBindCheckBox1 = new System.Windows.Forms.CheckBox();
             this.harmonyCheckBox = new System.Windows.Forms.CheckBox();
+            this.squadSpiritBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // foodDropBox
@@ -62,10 +63,18 @@
             this.harmonyCheckBox.UseVisualStyleBackColor = true;
             this.harmonyCheckBox.CheckedChanged += new System.EventHandler(this.harmonyCheckBox_CheckedChanged);
             // 
+            // squadSpiritBox
+            // 
+            resources.ApplyResources(this.squadSpiritBox, "squadSpiritBox");
+            this.squadSpiritBox.Name = "squadSpiritBox";
+            this.squadSpiritBox.UseVisualStyleBackColor = true;
+            this.squadSpiritBox.CheckedChanged += new System.EventHandler(this.squadSpiritBox_CheckedChanged);
+            // 
             // GluttonySettings
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.squadSpiritBox);
             this.Controls.Add(this.harmonyCheckBox);
             this.Controls.Add(this.spiritBindCheckBox1);
             this.Controls.Add(this.foodLabel);
@@ -74,6 +83,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.CheckBox squadSpiritBox;
 
         private System.Windows.Forms.CheckBox harmonyCheckBox;
 

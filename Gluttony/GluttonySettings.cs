@@ -8,7 +8,7 @@ namespace Gluttony
     public partial class GluttonySettings : Form
     {
         private Dictionary<uint, string> foodDict;
-        
+
         public static bool loading = false;
 
         public GluttonySettings()
@@ -19,10 +19,10 @@ namespace Gluttony
             UpdateFood();
 
             if (InventoryManager.FilledSlots.ContainsFooditem(Settings.Instance.Id)) { foodDropBox.SelectedValue = Settings.Instance.Id; }
-            
+
             spiritBindCheckBox1.Checked = Settings.Instance.SpiritPotionsEnabled;
             harmonyCheckBox.Checked = Settings.Instance.PotionOfHarmonyEnabled;
-            
+
             loading = false;
         }
 
@@ -60,6 +60,13 @@ namespace Gluttony
         {
             if (loading) return;
             Settings.Instance.PotionOfHarmonyEnabled = harmonyCheckBox.Checked;
+            Settings.Instance.Save();
+        }
+
+        private void squadSpiritBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (loading) return;
+            Settings.Instance.SquadManualEnabled = squadSpiritBox.Checked;
             Settings.Instance.Save();
         }
     }

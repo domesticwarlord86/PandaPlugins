@@ -138,7 +138,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;foodDropBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="foodLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -165,7 +165,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;foodLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="spiritBindCheckBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 37</value>
@@ -189,7 +189,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;spiritBindCheckBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="harmonyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -217,6 +217,33 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;harmonyCheckBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="squadSpiritBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="squadSpiritBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 67</value>
+  </data>
+  <data name="squadSpiritBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>216, 24</value>
+  </data>
+  <data name="squadSpiritBox.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="squadSpiritBox.Text" xml:space="preserve">
+    <value>Use Squuadron Spiritbonding Manual</value>
+  </data>
+  <data name="&gt;&gt;squadSpiritBox.Name" xml:space="preserve">
+    <value>squadSpiritBox</value>
+  </data>
+  <data name="&gt;&gt;squadSpiritBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;squadSpiritBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;squadSpiritBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -226,7 +253,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>280, 64</value>
+    <value>283, 89</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>GluttonySettings</value>

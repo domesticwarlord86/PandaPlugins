@@ -30,6 +30,8 @@ namespace Gluttony
         private static uint _foodBuff = 48;
         private static uint _medBuff = 49;
         private static uint _elementalHarmonyBuff = 1587;
+        private static uint _squadManualBuff = 1083;
+        private static uint _squadManual = 14951;
 
         public override string Author
         {
@@ -152,6 +154,17 @@ namespace Gluttony
                 await UsePotionOfHarmony();
             }
 
+            if (!Core.Player.HasAura(_squadManualBuff) && Settings.Instance.SquadManualEnabled)
+            {
+                if (!InventoryManager.FilledSlots.Any(i => i.RawItemId == _squadManual))
+                {
+                    Logging.Write(Colors.Aquamarine, $"{DataManager.GetItem(_squadManual).CurrentLocaleName} is enabled, but none in inventory.");
+                    return false;
+                }
+
+                await UsePotionOfHarmony();
+            }
+
 
             //Don't block the logic below us in the tree.
             return false;
@@ -226,6 +239,32 @@ namespace Gluttony
 
             return true;
         }
+
+        private static async Task<bool> UseSqaudSpiritbonding()
+        {
+            if (!Settings.Instance.SquadManualEnabled) return true;
+            if (!Core.Player.HasAura(_squadManualBuff))
+            {
+                uint[] potions = new uint[] { _squadManual };
+
+                if (InventoryManager.FilledSlots.Any(i => potions.Contains(i.RawItemId)))
+                {
+                    var item = InventoryManager.FilledSlots.First(i => potions.Contains(i.RawItemId));
+                    if (item.CanUse())
+                    {
+                        Logging.Write(Colors.Aquamarine, "Gluttony: Using " + item.Name);
+                        item.UseItem();
+                    }
+                }
+                else
+                {
+                    Logging.Write(Colors.Aquamarine, $"Couldn't find {DataManager.GetItem(_squadManual).CurrentLocaleName}");
+                }
+            }
+
+
+            return true;
+        }
     }
 
     public static class Helpers
@@ -289,6 +328,22 @@ namespace Gluttony
                 if (_harmonyPotionEnabled != value)
                 {
                     _harmonyPotionEnabled = value;
+                    //Save();
+                }
+            }
+        }
+
+        private bool _squadManualEnabled;
+
+        [DefaultValue(false)]
+        public bool SquadManualEnabled
+        {
+            get => _squadManualEnabled;
+            set
+            {
+                if (_squadManualEnabled != value)
+                {
+                    _squadManualEnabled = value;
                     //Save();
                 }
             }

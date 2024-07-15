@@ -39,7 +39,7 @@
         </Reference>
         <Reference Include="PresentationCore" />
         <Reference Include="RebornBuddy">
-          <HintPath>..\..\..\RebornBuddy.exe</HintPath>
+          <HintPath>..\..\..\..\Reborn - Arelia\RebornBuddy.exe</HintPath>
         </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
