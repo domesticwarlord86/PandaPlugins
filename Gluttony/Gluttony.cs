@@ -162,7 +162,7 @@ namespace Gluttony
                     return false;
                 }
 
-                await UsePotionOfHarmony();
+                await UseSqaudSpiritbonding();
             }
 
 
