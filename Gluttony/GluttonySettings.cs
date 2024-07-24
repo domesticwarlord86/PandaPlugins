@@ -18,6 +18,10 @@ namespace Gluttony
             loading = true;
             UpdateFood();
 
+            spiritBindCheckBox1.Text = $"Use {DataManager.GetItem(Gluttony._spiritbondPotion).CurrentLocaleName}";
+            harmonyCheckBox.Text = $"Use {DataManager.GetItem(Gluttony._harmonyPotion).CurrentLocaleName}";
+            squadSpiritBox.Text = $"Use {DataManager.GetItem(Gluttony._squadManual).CurrentLocaleName}";
+
             if (InventoryManager.FilledSlots.ContainsFooditem(Settings.Instance.Id)) { foodDropBox.SelectedValue = Settings.Instance.Id; }
 
             spiritBindCheckBox1.Checked = Settings.Instance.SpiritPotionsEnabled;

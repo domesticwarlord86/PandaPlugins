@@ -31,7 +31,9 @@ namespace Gluttony
         private static uint _medBuff = 49;
         private static uint _elementalHarmonyBuff = 1587;
         private static uint _squadManualBuff = 1083;
-        private static uint _squadManual = 14951;
+        public static uint _squadManual = 14951;
+        public static uint _spiritbondPotion = 7059;
+        public static uint _harmonyPotion = 23349;
 
         public override string Author
         {
@@ -134,7 +136,7 @@ namespace Gluttony
             if (!Core.Player.HasAura(_medBuff) && Settings.Instance.SpiritPotionsEnabled)
             {
                 if (!InventoryManager.FilledSlots.Any(i =>
-                        i.RawItemId == 7059 || i.RawItemId == 19885 || i.RawItemId == 27960))
+                        i.RawItemId == _spiritbondPotion || i.RawItemId == 19885 || i.RawItemId == 27960))
                 {
                     Logging.Write(Colors.Aquamarine, "Spiritbound potions are enabled, but none in inventory.");
                     return false;
@@ -145,7 +147,7 @@ namespace Gluttony
 
             if (!Core.Player.HasAura(_elementalHarmonyBuff) && Settings.Instance.PotionOfHarmonyEnabled)
             {
-                if (!InventoryManager.FilledSlots.Any(i => i.RawItemId == 23349))
+                if (!InventoryManager.FilledSlots.Any(i => i.RawItemId == _harmonyPotion))
                 {
                     Logging.Write(Colors.Aquamarine, "Potion of Harmony is enabled, but none in inventory.");
                     return false;
@@ -197,7 +199,7 @@ namespace Gluttony
             if (!Settings.Instance.SpiritPotionsEnabled) return true;
             if (!Core.Player.HasAura(_medBuff))
             {
-                uint[] potions = new uint[] { 7059, 19885, 27960 };
+                uint[] potions = new uint[] { _spiritbondPotion, 19885, 27960 };
 
                 if (InventoryManager.FilledSlots.Any(i => potions.Contains(i.TrueItemId)))
                 {
@@ -219,7 +221,7 @@ namespace Gluttony
             if (!Settings.Instance.PotionOfHarmonyEnabled) return true;
             if (!Core.Player.HasAura(_elementalHarmonyBuff))
             {
-                uint[] potions = new uint[] { 23349 };
+                uint[] potions = new uint[] { _harmonyPotion };
 
                 if (InventoryManager.FilledSlots.Any(i => potions.Contains(i.RawItemId)))
                 {
