@@ -26,6 +26,7 @@ namespace Gluttony
 
             spiritBindCheckBox1.Checked = Settings.Instance.SpiritPotionsEnabled;
             harmonyCheckBox.Checked = Settings.Instance.PotionOfHarmonyEnabled;
+            squadSpiritBox.Checked = Settings.Instance.SquadManualEnabled;
 
             loading = false;
         }
