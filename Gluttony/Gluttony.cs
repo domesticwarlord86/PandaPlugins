@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using ff14bot.RemoteWindows;
 
-
 namespace Gluttony
 {
     public class Gluttony : BotPlugin
@@ -33,6 +32,8 @@ namespace Gluttony
         private static uint _squadManualBuff = 1083;
         public static uint _squadManual = 14951;
         public static uint _spiritbondPotion = 7059;
+        public static uint _potentSpiritbondPotion = 19885;
+        public static uint _superiorSpiritbondPotion = 27960;
         public static uint _harmonyPotion = 23349;
 
         public override string Author
@@ -136,24 +137,37 @@ namespace Gluttony
             if (!Core.Player.HasAura(_medBuff) && Settings.Instance.SpiritPotionsEnabled)
             {
                 if (!InventoryManager.FilledSlots.Any(i =>
-                        i.RawItemId == _spiritbondPotion || i.RawItemId == 19885 || i.RawItemId == 27960))
+                                                          i.RawItemId == _spiritbondPotion || i.RawItemId == _potentSpiritbondPotion || i.RawItemId == _superiorSpiritbondPotion))
                 {
                     Logging.Write(Colors.Aquamarine, "Spiritbound potions are enabled, but none in inventory.");
                     return false;
                 }
 
-                await DrinkPotion();
+                if (InventoryManager.FilledSlots.Any(i => i.RawItemId == _spiritbondPotion))
+                {
+                    await UseItem(_spiritbondPotion, _medBuff);
+                }
+
+                if (InventoryManager.FilledSlots.Any(i => i.RawItemId == _potentSpiritbondPotion))
+                {
+                    await UseItem(_potentSpiritbondPotion, _medBuff);
+                }
+
+                if (InventoryManager.FilledSlots.Any(i => i.RawItemId == _superiorSpiritbondPotion))
+                {
+                    await UseItem(_superiorSpiritbondPotion, _medBuff);
+                }
             }
 
             if (!Core.Player.HasAura(_elementalHarmonyBuff) && Settings.Instance.PotionOfHarmonyEnabled)
             {
                 if (!InventoryManager.FilledSlots.Any(i => i.RawItemId == _harmonyPotion))
                 {
-                    Logging.Write(Colors.Aquamarine, "Potion of Harmony is enabled, but none in inventory.");
+                    Logging.Write(Colors.Aquamarine, $"{DataManager.GetItem(_harmonyPotion).CurrentLocaleName} is enabled, but none in inventory.");
                     return false;
                 }
 
-                await UsePotionOfHarmony();
+                await UseItem(_harmonyPotion, _elementalHarmonyBuff);
             }
 
             if (!Core.Player.HasAura(_squadManualBuff) && Settings.Instance.SquadManualEnabled)
@@ -164,12 +178,36 @@ namespace Gluttony
                     return false;
                 }
 
-                await UseSqaudSpiritbonding();
+                await UseItem(_squadManual, _squadManualBuff);
             }
-
 
             //Don't block the logic below us in the tree.
             return false;
+        }
+
+        private static async Task<bool> UseItem(uint itemId, uint buff)
+        {
+            if (!Core.Player.HasAura(buff))
+            {
+                uint[] items = new uint[] { itemId };
+
+                if (InventoryManager.FilledSlots.Any(i => items.Contains(i.RawItemId)))
+                {
+                    var item = InventoryManager.FilledSlots.First(i => items.Contains(i.RawItemId));
+                    if (item.CanUse())
+                    {
+                        Logging.Write(Colors.Aquamarine, "Gluttony: Using " + item.Name);
+                        item.UseItem();
+                        await Coroutine.Wait(5000, () => Core.Player.HasAura(buff));
+                    }
+                }
+                else
+                {
+                    Logging.Write(Colors.Aquamarine, $"Couldn't find {DataManager.GetItem(itemId).CurrentLocaleName}");
+                }
+            }
+
+            return true;
         }
 
         private static async Task<bool> EatFood()
@@ -181,7 +219,6 @@ namespace Gluttony
                     return false;
                 }
 
-
                 var item = InventoryManager.FilledSlots.GetFoodItem(Settings.Instance.Id);
 
                 if (item == null) return false;
@@ -190,80 +227,6 @@ namespace Gluttony
                 item.UseItem();
                 await Coroutine.Wait(5000, () => Core.Player.HasAura(_foodBuff));
             }
-
-            return true;
-        }
-
-        private static async Task<bool> DrinkPotion()
-        {
-            if (!Settings.Instance.SpiritPotionsEnabled) return true;
-            if (!Core.Player.HasAura(_medBuff))
-            {
-                uint[] potions = new uint[] { _spiritbondPotion, 19885, 27960 };
-
-                if (InventoryManager.FilledSlots.Any(i => potions.Contains(i.TrueItemId)))
-                {
-                    var item = InventoryManager.FilledSlots.First(i => potions.Contains(i.RawItemId));
-                    if (item.CanUse())
-                    {
-                        Logging.Write(Colors.Aquamarine, "Gluttony: Drinking " + item.Name);
-                        item.UseItem();
-                    }
-                }
-            }
-
-
-            return true;
-        }
-
-        private static async Task<bool> UsePotionOfHarmony()
-        {
-            if (!Settings.Instance.PotionOfHarmonyEnabled) return true;
-            if (!Core.Player.HasAura(_elementalHarmonyBuff))
-            {
-                uint[] potions = new uint[] { _harmonyPotion };
-
-                if (InventoryManager.FilledSlots.Any(i => potions.Contains(i.RawItemId)))
-                {
-                    var item = InventoryManager.FilledSlots.First(i => potions.Contains(i.RawItemId));
-                    if (item.CanUse())
-                    {
-                        Logging.Write(Colors.Aquamarine, "Gluttony: Drinking " + item.Name);
-                        item.UseItem();
-                    }
-                }
-                else
-                {
-                    Logging.Write(Colors.Aquamarine, "Couldn't find Potion of Harmony");
-                }
-            }
-
-
-            return true;
-        }
-
-        private static async Task<bool> UseSqaudSpiritbonding()
-        {
-            if (!Settings.Instance.SquadManualEnabled) return true;
-            if (!Core.Player.HasAura(_squadManualBuff))
-            {
-                uint[] potions = new uint[] { _squadManual };
-
-                if (InventoryManager.FilledSlots.Any(i => potions.Contains(i.RawItemId)))
-                {
-                    var item = InventoryManager.FilledSlots.First(i => potions.Contains(i.RawItemId));
-                    if (item.CanUse())
-                    {
-                        Logging.Write(Colors.Aquamarine, "Gluttony: Using " + item.Name);
-                        item.UseItem();
-                    }
-                }
-                else
-                {
-                    Logging.Write(Colors.Aquamarine, $"Couldn't find {DataManager.GetItem(_squadManual).CurrentLocaleName}");
-                }
-            }
-
 
             return true;
         }
@@ -301,7 +264,8 @@ namespace Gluttony
         {
         }
 
-        [Setting] public uint Id { get; set; }
+        [Setting]
+        public uint Id { get; set; }
 
         private bool _spiritPotionEnabled;
 
