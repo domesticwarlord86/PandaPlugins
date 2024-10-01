@@ -8,15 +8,15 @@ namespace RetainerVentures
 
         public class RetainerVentureSettings : JsonSettings
         {
-            
+
             private static RetainerVentureSettings _RetainerVentureSettingssettings;
-            
+
             public static RetainerVentureSettings Instance => _RetainerVentureSettingssettings ?? (_RetainerVentureSettingssettings = new RetainerVentureSettings());
-            public RetainerVentureSettings() : base(Path.Combine(CharacterSettingsDirectory, "RetainerVentureSettings.json")) 
+            public RetainerVentureSettings() : base(Path.Combine(CharacterSettingsDirectory, "RetainerVentureSettings.json"))
             {
 
             }
-            
+
             private DateTime _lastChecked = new DateTime(1970, 1, 1);
             [Description("Last time we checked for ventures.")]
             [Category("Retainers")]
@@ -33,7 +33,7 @@ namespace RetainerVentures
                     }
                 }
             }
-            
+
             private int _checkTime;
             [Description("Time to wait in minutes between checking for ventures completed.")]
             [DefaultValue(10)]
@@ -50,7 +50,27 @@ namespace RetainerVentures
                         Save();
                     }
                 }
-            } 
+            }
+
+            private bool _returnHome;
+            [Description("Should we retun back to our location after retainers are finished?")]
+            [DefaultValue(true)]
+            [Category("Retainers")]
+            [Browsable(true)]
+            public bool ReturnHome
+            {
+                get => _returnHome;
+                set
+                {
+                    if (_returnHome != value)
+                    {
+                        _returnHome = value;
+                        Save();
+                    }
+                }
+            }
         }
-    
+
+
+
 }

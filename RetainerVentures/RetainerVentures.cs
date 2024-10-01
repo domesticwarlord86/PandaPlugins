@@ -181,11 +181,16 @@ namespace RetainerVentures
                 }
 
                 await GeneralFunctions.StopBusy();
-                if (WorldManager.ZoneId != lastLocation.ZoneId)
+
+                if (RetainerVentureSettings.Instance.ReturnHome)
                 {
-                    Log.Information($"Going back to where we were");
-                    await LlamaLibrary.Helpers.Navigation.GetTo(lastLocation);
+                    if (WorldManager.ZoneId != lastLocation.ZoneId)
+                    {
+                        Log.Information($"Going back to where we were");
+                        await LlamaLibrary.Helpers.Navigation.GetTo(lastLocation);
+                    }
                 }
+
 
             }
 
